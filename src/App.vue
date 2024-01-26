@@ -2,10 +2,10 @@
 <div id="header">
   <nav>
     <ul>
-      <li v-if="!isLoggedIn"><router-link to="/">Home</router-link></li>
-      <li v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
+      <li v-if="!isLoggedIn"><router-link to="/itblog/main">Home</router-link></li>
+      <li v-if="!isLoggedIn"><router-link to="/itblog/login">Login</router-link></li>
       <li v-if="isLoggedIn"><span>{{ userEmail }}</span></li>
-      <li v-if="isLoggedIn"><router-link to="/">Home</router-link></li>
+      <li v-if="isLoggedIn"><router-link to="/itblog/main">Home</router-link></li>
       <li v-if="isLoggedIn" @click="logout">Logout</li>
     </ul>
   </nav>
@@ -14,7 +14,26 @@
 
 </template>
 
+<script>
+import { mapState, mapActions } from 'vuex';
+export default {
+  computed: {
+    ...mapState({
+      isLoggedIn: state => state.isLoggedIn,
+      userEmail: state => state.email
+    })
+  },
+  methods: {
+    ...mapActions(['logout', 'loginCheck']),
+  },
+  created() {
+    this.loginCheck();
+  }
+};
+</script>
+
 <style>
+
 
 body{
     font-family: 'Roboto', sans-serif;
@@ -63,7 +82,7 @@ body{
 }
 
 .router-view {
-  margin-top: 100px; /* router-view 위 여백 추가 */
+  //margin-top: 100px; /* router-view 위 여백 추가 */
 }
 
 </style>
